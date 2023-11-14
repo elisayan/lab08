@@ -3,6 +3,7 @@ package it.unibo.mvc;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -25,7 +26,6 @@ public class MiniGUI {
     private static final int PROPORTION = 5;
     private final Random randomGenerator = new Random();
     private final JFrame frame = new JFrame(TITLE);
-    private static final String RESULT_TXT_CONTENT = "Result";
 
     /**
      * Creates a new {@link MiniGUI}.
@@ -47,11 +47,11 @@ public class MiniGUI {
         final JButton button = new JButton("My button");
         panel.add(button, BorderLayout.CENTER);
         frame.setContentPane(panel);
-
         /*
          * Part2
          */
-        canvas.add(new JTextField(RESULT_TXT_CONTENT), BorderLayout.NORTH);
+        final JTextField textField = new JTextField("Result");
+        canvas.add(textField, BorderLayout.NORTH);
         frame.setContentPane(canvas);
         /*
          * Handlers
@@ -59,10 +59,9 @@ public class MiniGUI {
         write.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                //System.out.println(randomGenerator.nextInt());
-                final int res = randomGenerator.nextInt();
-                System.out.println(res); // NOPMD
-                //result.setText(RESULT_TXT_CONTENT + ": " + Integer.toString(res));
+                String s = Integer.toString(randomGenerator.nextInt());
+                System.out.println(s);   
+                textField.setText("Result: " + s);
             }
         });
     }
