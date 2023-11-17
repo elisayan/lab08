@@ -31,11 +31,11 @@ public class DeathNoteImpl implements DeathNote{
 
     @Override
     public boolean writeDeathCause(String cause) {        
-        if(cause.equals(null) || deathList.isEmpty()){
+        if (cause == null || deathList.isEmpty()) {
             throw new IllegalStateException();
         }
         final long currentTimeMillis = System.currentTimeMillis();
-        if (this.time - currentTimeMillis < 40) {
+        if (currentTimeMillis - this.time < 40) {
             deathList.get(this.currentName).setFirst(cause);
             this.time = currentTimeMillis;
             return true;
@@ -45,11 +45,11 @@ public class DeathNoteImpl implements DeathNote{
 
     @Override
     public boolean writeDetails(String details) {
-        if(details.isEmpty() || deathList.isEmpty()){
+        if(details == null || deathList.isEmpty()){
             throw new IllegalStateException();
         }
         final long currentTimeMillis = System.currentTimeMillis();
-        if (this.time - currentTimeMillis < 6040) {
+        if (currentTimeMillis - this.time < 6040) {
             deathList.get(this.currentName).setSecond(details);
             return true;
         }
@@ -58,18 +58,18 @@ public class DeathNoteImpl implements DeathNote{
 
     @Override
     public String getDeathCause(String name) {
-        if(!deathList.containsKey(name)){
-            throw new IllegalArgumentException();
+        if(isNameWritten(name)) {
+            return deathList.get(name).getFirst();
         }
-        return deathList.get(name) == null ? "heart attack" : deathList.get(name).getFirst();
+        throw new IllegalArgumentException();
     }
 
     @Override
     public String getDeathDetails(String name) {
-        if(!deathList.containsKey(name)){
-            throw new IllegalArgumentException();
+        if(isNameWritten(name)) {
+            return deathList.get(name).getSecond();
         }
-        return deathList.get(name) == null ? "" : deathList.get(name).getSecond();
+        throw new IllegalArgumentException();
     }
 
     @Override
