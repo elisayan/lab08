@@ -5,11 +5,9 @@ import it.unibo.bank.api.BankAccount;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.opentest4j.AssertionFailedError;
 
 import static it.unibo.bank.impl.SimpleBankAccount.*;
 import static it.unibo.bank.impl.StrictBankAccount.TRANSACTION_FEE;
-import static org.junit.jupiter.api.Assertions.*;
 
 public class TestStrictBankAccount {
 
