@@ -7,7 +7,7 @@ import it.unibo.deathnote.api.DeathNote;
 
 public class DeathNoteImpl implements DeathNote{
 
-    private final Map<String, Pair<String, String>> deathList = new HashMap<>();
+    private final Map<String, Pair<String, String>> deathNote = new HashMap<>();
     private String currentName;
     private long time;
 
@@ -25,18 +25,18 @@ public class DeathNoteImpl implements DeathNote{
             throw new NullPointerException();
         }
         this.currentName = name;
-        deathList.put(name, new Pair<String,String>("heart attack", ""));
+        this.deathNote.put(name, new Pair<String,String>("heart attack", ""));
         this.time = System.currentTimeMillis();
     }
 
     @Override
     public boolean writeDeathCause(String cause) {        
-        if (cause == null || deathList.isEmpty()) {
+        if (cause == null || this.deathNote.isEmpty()) {
             throw new IllegalStateException();
         }
         final long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - this.time < 40) {
-            deathList.get(this.currentName).setFirst(cause);
+            this.deathNote.get(this.currentName).setFirst(cause);
             this.time = currentTimeMillis;
             return true;
         }
@@ -45,12 +45,12 @@ public class DeathNoteImpl implements DeathNote{
 
     @Override
     public boolean writeDetails(String details) {
-        if(details == null || deathList.isEmpty()){
+        if(details == null || this.deathNote.isEmpty()){
             throw new IllegalStateException();
         }
         final long currentTimeMillis = System.currentTimeMillis();
         if (currentTimeMillis - this.time < 6040) {
-            deathList.get(this.currentName).setSecond(details);
+            this.deathNote.get(this.currentName).setSecond(details);
             return true;
         }
         return false;
@@ -59,7 +59,7 @@ public class DeathNoteImpl implements DeathNote{
     @Override
     public String getDeathCause(String name) {
         if(isNameWritten(name)) {
-            return deathList.get(name).getFirst();
+            return this.deathNote.get(name).getFirst();
         }
         throw new IllegalArgumentException();
     }
@@ -67,14 +67,14 @@ public class DeathNoteImpl implements DeathNote{
     @Override
     public String getDeathDetails(String name) {
         if(isNameWritten(name)) {
-            return deathList.get(name).getSecond();
+            return this.deathNote.get(name).getSecond();
         }
         throw new IllegalArgumentException();
     }
 
     @Override
     public boolean isNameWritten(String name) {
-        return deathList.containsKey(name);
+        return this.deathNote.containsKey(name);
     }
     
     public class Pair<T, R> {
